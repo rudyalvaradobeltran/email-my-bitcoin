@@ -26,7 +26,7 @@ export class LambdaBitcoinStack extends Stack {
     });
 
     const ruleBitcoin = new Rule(this, 'rule', {
-      schedule: Schedule.expression('cron(05 23 ? * SUN-SAT *)'),
+      schedule: Schedule.rate(Duration.minutes(5)),
       targets: [new LambdaFunction(lambdaBitcoin)]
     });
   }
