@@ -12,15 +12,11 @@ jobs:
       name: main
     runs-on: ubuntu-latest
     env:
-      CDK_DEFAULT_REGION: ${{ vars.REGION }}
-      AWS_DEPLOY_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}      
-      ROLE_ARN: ${{ vars.ROLE_ARN }}
+      CDK_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      CDK_DEFAULT_ACCOUNT: ${{ secrets.CDK_DEFAULT_ACCOUNT }}
     permissions:
       contents: read
-      pull-requests: write
       id-token: write
-      checks: write
-      actions: read
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -32,9 +28,6 @@ jobs:
           cd src/LambdaBitcoin
           npm install
           npm run build
-        env:
-          PFG_ARTIFACTORY_USERNAME: ${{ secrets.PFG_ARTIFACTORY_USERNAME }}
-          PFG_ARTIFACTORY_NPM_AUTH: ${{ secrets.PFG_ARTIFACTORY_NPM_AUTH }}
 
       - name: zip lambda-bitcoin-stack
         run: |
@@ -42,7 +35,7 @@ jobs:
           zip -r ../../LambdaBitcoin.zip .    
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: ${{ secrets.AWS_GITHUB_OIDC_ROLE }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
@@ -54,9 +47,6 @@ jobs:
       - name: configure aws account and prepare deploy
         run: |
           cd deploy && npm install
-        env:
-          PFG_ARTIFACTORY_USERNAME: ${{ secrets.PFG_ARTIFACTORY_USERNAME }}
-          PFG_ARTIFACTORY_NPM_AUTH: ${{ secrets.PFG_ARTIFACTORY_NPM_AUTH}}
 
       - name: cdk synth
         run: |

@@ -18,7 +18,7 @@ export class LambdaBitcoinStack extends Stack {
     const lambdaBitcoin = new NodejsFunction(this, "LambdaBitcoinFunction", {
       runtime: Runtime.NODEJS_18_X,
       handler: "handler",
-      entry: join(__dirname, "..", "..", "src", "LambdaBitcoin", "index.ts"),
+      entry: join(__dirname, "..", "..", "src", "LambdaBitcoin", "build/index.js"),
       tracing: Tracing.ACTIVE,
       logRetention: RetentionDays.SIX_MONTHS,
       timeout: Duration.seconds(60),
