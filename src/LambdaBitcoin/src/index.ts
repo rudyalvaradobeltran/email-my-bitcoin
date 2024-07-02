@@ -8,7 +8,7 @@ const lambdaHandler = async (): Promise<void> => {
   try {
     const response = await axios.default.get('bitcoin');
     logger.info(`Current bitcoin price ${response.data.data.priceUsd.split(".")[0]}`);
-  } catch (err) {
+  } catch (err: any) {
     logger.error(err);
   }
 }
