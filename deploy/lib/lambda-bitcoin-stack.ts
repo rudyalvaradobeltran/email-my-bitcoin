@@ -25,7 +25,7 @@ export class LambdaBitcoinStack extends Stack {
       environment: {},
     });
 
-    const ruleBitcoin = new Rule(this, 'rule', {
+    new Rule(this, 'rule', {
       schedule: Schedule.rate(Duration.minutes(5)),
       targets: [new LambdaFunction(lambdaBitcoin)]
     });
