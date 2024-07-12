@@ -2,7 +2,6 @@ import { SecretsManager } from "@aws-sdk/client-secrets-manager";
 
 export async function getSecret(secretArn: string): Promise<string> {
   var client = new SecretsManager({ region: process.env.AWS_REGION });
-  console.log("aws region:", process.env.AWS_REGION);
   return new Promise((resolve, reject) => {
     client.getSecretValue({ SecretId: secretArn }, (err, data) => {
       if (err) {
