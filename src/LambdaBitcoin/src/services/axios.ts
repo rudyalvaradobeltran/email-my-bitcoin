@@ -1,5 +1,6 @@
 import axios from "axios";
+import getSecret from "./secret-manager";
 
 export default axios.create({
-  baseURL: 'https://api.coincap.io/v2/assets/'
+  baseURL: (await getSecret('baseurl')).SecretString
 });

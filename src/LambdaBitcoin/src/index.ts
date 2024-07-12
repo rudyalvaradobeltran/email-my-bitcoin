@@ -14,14 +14,13 @@ const lambdaHandler = async (event: any): Promise<void> => {
       FromEmailAddress: 'Rudy Alvarado <rudy.alvarado.b@gmail.com>',
       Destination: { ToAddresses: [ 'rudy.alvarado.b@gmail.com' ] },
       EmailTags: [{ Name: 'type', Value: 'bitcoin' }],
-      ReplyToAddresses: ['rudy.alvarado.b@gmail.com'],
       Content: {
         Simple: {
           Subject: { Data: "Today's Bitcoin Price!" },
           Body: {
             Html: {
               Charset: 'UTF-8',
-              Data: `Current bitcoin price at ${new Date().toLocaleString()}: ${response.data.data.priceUsd.split(".")[0]}`
+              Data: `Current bitcoin price at ${new Date().toLocaleString()}: $${response.data.data.priceUsd.split(".")[0]}`
             },
             Text: { Data: 'TEST EMAIL' }
           }
