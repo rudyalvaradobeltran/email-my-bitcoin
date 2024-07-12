@@ -39,7 +39,7 @@ export class LambdaBitcoinStack extends Stack {
       })
     );
 
-    const apiKey = new secretsmanager.Secret(this, 'SampleApiKey', { secretName: "Email" });
+    const secretValueEmail = secretsmanager.Secret.fromSecretNameV2(this, 'SecretValueEmail','Email');
     
     const lambdaBitcoin = new NodejsFunction(this, "LambdaBitcoinFunction", {
       runtime: Runtime.NODEJS_18_X,
@@ -56,7 +56,7 @@ export class LambdaBitcoinStack extends Stack {
       logRetention: RetentionDays.SIX_MONTHS,
       timeout: Duration.seconds(60),
       environment: {
-        emailArn: apiKey.secretArn
+        emailArn: secretValueEmail.secretArn
       },
       role: role
     });
