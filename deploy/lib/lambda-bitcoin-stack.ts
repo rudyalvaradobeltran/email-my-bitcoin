@@ -32,6 +32,7 @@ export class LambdaBitcoinStack extends Stack {
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
           "logs:PutLogEvents",
+          "secretsmanager:GetSecretValue"
         ],
         resources: ["*"]
       })
