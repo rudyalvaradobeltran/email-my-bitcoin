@@ -1,16 +1,19 @@
-import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
+import { SecretsManager } from "@aws-sdk/client-secrets-manager";
 
-const client = new SecretsManagerClient({ region: "us-east-1" });
-
-export default async function getSecret(secretName: string) {
-  try {
-    return client.send(
-      new GetSecretValueCommand({
-        SecretId: secretName,
-        VersionStage: "AWSCURRENT",
-      })
-    );
-  } catch (error) {
-    throw error;
-  }
+export async function getSecret(secretArn: string): Promise<string> {
+  var client = new SecretsManager({ region: process.env.AWS_REGION });
+  console.log("aws region:", process.env.AWS_REGION);
+  return new Promise((resolve, reject) => {
+    client.getSecretValue({ SecretId: secretArn }, (err, data) => {
+      if (err) {
+        reject(err)
+        return
+      }
+      if ('SecretString' in data!) {
+        resolve(data.SecretString as string)
+      } else {
+        resolve(Buffer.from(data!.SecretBinary as any, 'base64').toString('ascii'))
+      }
+    })
+  });
 }

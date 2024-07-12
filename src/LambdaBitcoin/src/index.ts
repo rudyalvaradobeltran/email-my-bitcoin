@@ -1,7 +1,8 @@
 import { Logger, injectLambdaContext } from "@aws-lambda-powertools/logger";
 import { SESv2Client, SendEmailCommand, SendEmailCommandInput } from "@aws-sdk/client-sesv2"
 import middy from "@middy/core";
-import getByDir from "./services/axios";
+import * as axios from "./services/axios";
+import { getSecret } from "./services/secret-manager";
 
 const logger = new Logger({ serviceName: "lambda-bitcoin" });
 let client: SESv2Client;
@@ -9,10 +10,13 @@ let client: SESv2Client;
 const lambdaHandler = async (event: any): Promise<void> => {
   try {
     if (!client) client = new SESv2Client({});
-    const response = await getByDir('bitcoin');
+    console.log("email arn:", process.env.emailArn);
+    const email = await getSecret(process.env.emailArn as string)
+    console.log("email:", email);
+    const response = await axios.default.get('bitcoin');
     const input: SendEmailCommandInput = {
-      FromEmailAddress: 'Rudy Alvarado <rudy.alvarado.b@gmail.com>',
-      Destination: { ToAddresses: [ 'rudy.alvarado.b@gmail.com' ] },
+      FromEmailAddress: `Rudy Alvarado <${email}>`,
+      Destination: { ToAddresses: [ email ] },
       EmailTags: [{ Name: 'type', Value: 'bitcoin' }],
       Content: {
         Simple: {

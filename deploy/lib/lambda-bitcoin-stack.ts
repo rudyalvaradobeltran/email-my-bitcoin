@@ -1,4 +1,5 @@
 import { Duration, Stack, StackProps } from "aws-cdk-lib";
+import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
 import { Runtime, Tracing } from "aws-cdk-lib/aws-lambda";
 import { Rule, Schedule } from "aws-cdk-lib/aws-events";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
@@ -37,6 +38,8 @@ export class LambdaBitcoinStack extends Stack {
         resources: ["*"]
       })
     );
+
+    const apiKey = new secretsmanager.Secret(this, 'SampleApiKey', { secretName: "Email" });
     
     const lambdaBitcoin = new NodejsFunction(this, "LambdaBitcoinFunction", {
       runtime: Runtime.NODEJS_18_X,
@@ -52,7 +55,9 @@ export class LambdaBitcoinStack extends Stack {
       tracing: Tracing.ACTIVE,
       logRetention: RetentionDays.SIX_MONTHS,
       timeout: Duration.seconds(60),
-      environment: {},
+      environment: {
+        emailArn: apiKey.secretArn
+      },
       role: role
     });
 
