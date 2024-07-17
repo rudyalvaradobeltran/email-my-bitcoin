@@ -3,6 +3,7 @@ import { SESv2Client, SendEmailCommand, SendEmailCommandInput } from "@aws-sdk/c
 import middy from "@middy/core";
 import * as axios from "./services/axios";
 import { getSecret } from "./services/secret-manager";
+import template from "./email/template";
 
 const logger = new Logger({ serviceName: "lambda-bitcoin" });
 let client: SESv2Client;
@@ -23,7 +24,7 @@ const lambdaHandler = async (event: any): Promise<void> => {
           Body: {
             Html: {
               Charset: 'UTF-8',
-              Data: `Current bitcoin price at ${new Date().toLocaleString()}: $${response.data.data.priceUsd.split(".")[0]}`
+              Data: template(response.data.data.priceUsd.split(".")[0])
             },
             Text: { Data: 'TEST EMAIL' }
           }
