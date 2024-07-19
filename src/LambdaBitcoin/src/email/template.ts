@@ -1,4 +1,4 @@
-export default function template(price: number): string {
+export default function template(price: number, senderName: string): string {
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="https://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -301,7 +301,7 @@ export default function template(price: number): string {
                     <tr>
                      <td valign="top" align="center" style="padding: 0px 0px 0px 0px;">
                       <div class="pc-font-alt" style="line-height: 180%; letter-spacing: 0px; font-family: 'Space Grotesk', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; font-variant-ligatures: normal; color: #ffffff; text-align: center; text-align-last: center;">
-                       <div><span style="font-weight: 400;font-style: normal;">Rudy Alvarado Beltrán</span>
+                       <div><span style="font-weight: 400;font-style: normal;">${senderName}</span>
                        </div>
                       </div>
                      </td>

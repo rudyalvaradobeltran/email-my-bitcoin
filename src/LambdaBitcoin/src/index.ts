@@ -28,7 +28,7 @@ const lambdaHandler = async (event: any): Promise<void> => {
           Body: {
             Html: {
               Charset: 'UTF-8',
-              Data: template(response.data.data.priceUsd.split(".")[0])
+              Data: template(response.data.data.priceUsd.split(".")[0], senderName)
             },
             Text: { Data: 'TEST EMAIL' }
           }
