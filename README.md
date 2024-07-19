@@ -39,14 +39,16 @@ This project is an AWS CDK application that sets up an automated system to fetch
 4. **Create Secrets in AWS Secrets Manager**
     ```bash
     aws secretsmanager create-secret --name "Email" --secret-string "{\"email\":\"your-email@example.com\"}"
+    aws secretsmanager create-secret --name "Sender" --secret-string "{\"sender\":\"sender-name\"}"
     ```
+5. **Configure Amazon SES**
 
-5. **Deploy the Stack**
+6. **Deploy the Stack**
     ```bash
     cdk deploy
     ```
 
-6. **Set Up GitHub Actions**
+7. **Set Up GitHub Actions**
     - Create a new GitHub repository and push your code.
     - Add the following secrets to your GitHub repository:
         - `AWS_DEFAULT_REGION`
