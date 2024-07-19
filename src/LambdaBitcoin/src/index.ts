@@ -11,14 +11,16 @@ let client: SESv2Client;
 const lambdaHandler = async (event: any): Promise<void> => {
   try {
     if (!client) client = new SESv2Client({});
-    let secretValueEmail: string = await getSecret(process.env.emailArn as string);
-    let secretValueSender: string = await getSecret(process.env.senderArn as string);
-    let email = cleanSecret(secretValueEmail);
-    let sender = cleanSecret(secretValueSender);
+    let secretValueSenderEmail: string = await getSecret(process.env.senderEmailArn as string);
+    let secretValueSenderName: string = await getSecret(process.env.senderNameArn as string);
+    let secretValueRecipientEmail: string = await getSecret(process.env.recipientEmailArn as string);
+    let senderemail = cleanSecret(secretValueSenderEmail);
+    let senderName = cleanSecret(secretValueSenderName);
+    let recipientEmail = cleanSecret(secretValueRecipientEmail);
     const response = await axios.default.get('bitcoin');
     const input: SendEmailCommandInput = {
-      FromEmailAddress: `${sender} <${email}>`,
-      Destination: { ToAddresses: [ email ] },
+      FromEmailAddress: `${senderName} <${senderemail}>`,
+      Destination: { ToAddresses: [ recipientEmail ] },
       EmailTags: [{ Name: 'type', Value: 'bitcoin' }],
       Content: {
         Simple: {

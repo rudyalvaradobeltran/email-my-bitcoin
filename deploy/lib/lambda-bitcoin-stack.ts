@@ -39,8 +39,9 @@ export class LambdaBitcoinStack extends Stack {
       })
     );
 
-    const secretValueEmail = secretsmanager.Secret.fromSecretNameV2(this, 'SecretValueEmail', 'Email');
-    const secretValueSender = secretsmanager.Secret.fromSecretNameV2(this, 'SecretValueSender', 'Sender');
+    const secretValueSenderEmail = secretsmanager.Secret.fromSecretNameV2(this, 'SecretValueEmail', 'SenderEmail');
+    const secretValueSenderName = secretsmanager.Secret.fromSecretNameV2(this, 'SecretValueSender', 'SenderName');
+    const secretValueRecipientEmail = secretsmanager.Secret.fromSecretNameV2(this, 'SecretValueSender', 'RecipientEmail');
     
     const lambdaBitcoin = new NodejsFunction(this, "LambdaBitcoinFunction", {
       runtime: Runtime.NODEJS_18_X,
@@ -57,8 +58,9 @@ export class LambdaBitcoinStack extends Stack {
       logRetention: RetentionDays.SIX_MONTHS,
       timeout: Duration.seconds(60),
       environment: {
-        emailArn: secretValueEmail.secretArn,
-        senderArn: secretValueSender.secretArn
+        senderEmailArn: secretValueSenderEmail.secretArn,
+        senderNameArn: secretValueSenderName.secretArn,
+        recipientEmailArn: secretValueRecipientEmail.secretArn
       },
       role: role
     });

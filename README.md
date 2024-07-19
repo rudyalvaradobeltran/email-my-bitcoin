@@ -38,10 +38,13 @@ This project is an AWS CDK application that sets up an automated system to fetch
 
 4. **Create Secrets in AWS Secrets Manager**
     ```bash
-    aws secretsmanager create-secret --name "Email" --secret-string "{\"email\":\"your-email@example.com\"}"
-    aws secretsmanager create-secret --name "Sender" --secret-string "{\"sender\":\"sender-name\"}"
+    aws secretsmanager create-secret --name "SenderEmail" --secret-string "{\"SenderEmail\":\"your-email@example.com\"}"
+    aws secretsmanager create-secret --name "SenderName" --secret-string "{\"SenderName\":\"sender-name\"}"
+    aws secretsmanager create-secret --name "RecipientEmail" --secret-string "{\"RecipientEmail\":\"recip-email@example.com\"}"
     ```
 5. **Configure Amazon SES**
+
+    - Configure the sender email on Amazon SES.
 
 6. **Deploy the Stack**
     ```bash
