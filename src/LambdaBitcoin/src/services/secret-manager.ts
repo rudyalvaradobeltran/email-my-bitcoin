@@ -17,7 +17,8 @@ export async function getSecret(secretArn: string): Promise<string> {
   });
 };
 
-export function cleanSecret(secret: string): string {
+export async function cleanSecret(secretArn: string): Promise<string> {
+  const secret = await getSecret(secretArn);
   const split = secret.split(':')[1];
   return split.substring(1, split.length - 2);
 }
