@@ -7,7 +7,7 @@ This project is an AWS CDK application that sets up an automated system to fetch
 - **EventBridge Rule**: Triggers a Lambda function every n days/hours/minutes.
 - **Lambda Function**: Calls an external API (api.coincap.io) to get the current Bitcoin price.
 - **Amazon SES**: Sends the Bitcoin price via email.
-- **Secrets Manager**: Stores the recipient email address securely.
+- **Secrets Manager**: Stores the names and email addresses securely.
 - **GitHub Actions**: Automates the deployment process.
 
 ## Prerequisites
@@ -22,8 +22,8 @@ This project is an AWS CDK application that sets up an automated system to fetch
 
 1. **Clone the Repository**
     ```bash
-    git clone https://github.com/yourusername/bitcoin-price-notification.git
-    cd bitcoin-price-notification
+    git clone https://github.com/rudyalvaradobeltran/email-my-bitcoin.git
+    cd email-my-bitcoin
     ```
 
 2. **Install Dependencies**
@@ -40,7 +40,7 @@ This project is an AWS CDK application that sets up an automated system to fetch
     ```bash
     aws secretsmanager create-secret --name "SenderEmail" --secret-string "{\"SenderEmail\":\"your-email@example.com\"}"
     aws secretsmanager create-secret --name "SenderName" --secret-string "{\"SenderName\":\"sender-name\"}"
-    aws secretsmanager create-secret --name "RecipientEmail" --secret-string "{\"RecipientEmail\":\"recip-email@example.com\"}"
+    aws secretsmanager create-secret --name "RecipientEmail" --secret-string "{\"RecipientEmail\":\"recipient-email@example.com\"}"
     ```
 5. **Configure Amazon SES**
 
